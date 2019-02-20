@@ -32,6 +32,7 @@ import constants
 
 app = Flask(__name__)
 
+# Silences logging from the temporary webserver
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
@@ -45,10 +46,9 @@ received_state = None
 
 @app.route('/callback')
 def callback():
-    """ The callback is invoked after a completed login attempt
-        (succesful or otherwise). It sets global variables with
-        the auth code or error messages, then sets the polling
-        flag received_callback.
+    """ The callback is invoked after a completed login attempt (succesful or
+    otherwise). It sets global variables with the auth code or error messages,
+    then sets the polling flag received_callback.
     """
     global received_callback, code, error_message, received_state
     if 'error' in request.args:
@@ -58,12 +58,13 @@ def callback():
         code = request.args['code']
     received_state = request.args['state']
     received_callback = True
-    return "You can close this window and return to the command line."
+    return "You can close this window/tab and return to the command line."
 
 
 class ServerThread(threading.Thread):
-    """ The Flask server is done this way to allow shutting down after
-        a single request has been received.
+    """ The Flask server is done this way to allow shutting down after a single
+    request has been received. A server is created only to receive the callback
+    after the login attempt.
     """
     def __init__(self, app):
         threading.Thread.__init__(self)
@@ -120,10 +121,11 @@ def load_env():
 
 
 def authenticate(env):
-    """ Opens a browser tab to the authentication url (Universal Login
-    page of the configured tenant) and starts a server to received the
-    callback after the user logs in. The callback results in the
-    global 'code' variable being populated with the authorization code.
+    """ Opens a browser tab to the authentication url (Universal Login page of
+    the configured tenant) and starts a server to receive the callback after
+    the user logs in. The callback results in the global 'code' variable being
+    populated with the authorization code, or the global error_message variable
+    being populated if there was an error during authentication.
     """
     url_parameters = {
         'audience': env['audience'],
@@ -146,15 +148,6 @@ def authenticate(env):
         sleep(1)
     server.shutdown()
 
-    if env['state'] != received_state:
-        print('Error: session replay or similar attack in progress.')
-        exit(-1)
-
-    if error_message:
-        print("An error occurred:")
-        print(error_message)
-        exit(-1)
-
 
 def get_access_token(env):
     """ Exchange the authorization code for an access token.
@@ -174,9 +167,21 @@ def get_access_token(env):
 
 
 def main():
-    """main"""
+    """main -- if this module is called directly, authenticate, acquia an
+    access token, and print the access token to stdout.
+    """
     env = load_env()
     authenticate(env)
+
+    if env['state'] != received_state:
+        print('Error: session replay or similar attack in progress.')
+        exit(-1)
+
+    if error_message:
+        print("An error occurred:")
+        print(error_message)
+        exit(-1)
+
     print(get_access_token(env))
 
 
