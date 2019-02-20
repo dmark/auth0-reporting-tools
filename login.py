@@ -1,13 +1,13 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-""" login.py -- provides user authentication for command line tools
-    using authorization code grant flow with PKCE. Opens a tab in your
-    browser pointing to your tenant's Universal Login page, and starts
-    a web server locally to receive the callback. The server is shut
-    down once the callback has been received and the authorization code
-    recorded. The code is then exchanged fo an access token.
+""" login.py -- provides user authentication for command line tools using
+authorization code grant flow with PKCE. Opens a tab in your browser pointing
+to your tenant's Universal Login page, and starts a web server locally to
+receive the callback. The server is shut down once the callback has been
+received and the authorization code recorded. The code is then exchanged for an
+access token.
 
-    Based on: https://github.com/gateley-auth0/CLI-PKCE
+Based on: https://github.com/gateley-auth0/CLI-PKCE
 """
 import base64
 import hashlib
@@ -169,7 +169,8 @@ def get_access_token(env):
         'audience': env['audience'],
         'redirect_uri': env['callback_url']
         }
-    return requests.post(token_url, headers=headers, data=json.dumps(body)).json()
+    return requests.post(token_url, headers=headers,
+                         data=json.dumps(body)).json()
 
 
 def main():

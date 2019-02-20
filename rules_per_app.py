@@ -41,29 +41,31 @@ def main():
 
     for rule in rules:
         # Skip rules that are disabled
-        if rule['enabled'] == False:
+        if rule['enabled'] is False:
             continue
-        
-        s_context_clientName_equal = '.*context.clientName ===.*'
-        s_context_clientName_notequal = '.*context.clientName !==.*'
-        
-        if re.search(s_context_clientName_equal, rule['script'], re.M|re.I):
+
+        s_clientName_equal = '.*context.clientName ===.*'
+        s_clientName_notequal = '.*context.clientName !==.*'
+
+        if re.search(s_clientName_equal, rule['script'], re.M | re.I):
             # Rule has "context.clientName ===", add to matching clients
             for client in clients:
                 if client['name'] == "All Applications":
                     continue
-                s_string = '.*context.clientName === \'' + client['name'] + '\'.*'
-                if re.search(s_string, rule['script'], re.M|re.I):
+                s_string = '.*context.clientName === \'' + \
+                    client['name'] + '\'.*'
+                if re.search(s_string, rule['script'], re.M | re.I):
                     applications[client['name']].append(rule['name'])
                 else:
                     applications[client['name']].append('')
-        elif re.search(s_context_clientName_notequal, rule['script'], re.M|re.I):
+        elif re.search(s_clientName_notequal, rule['script'], re.M | re.I):
             # Rule has "context.clientName !==", add to non-matching clients
             for client in clients:
                 if client['name'] == "All Applications":
                     continue
-                s_string = '.*context.clientName !== \'' + client['name'] + '\'.*'
-                if re.search(s_string, rule['script'], re.M|re.I):
+                s_string = '.*context.clientName !== \'' + \
+                    client['name'] + '\'.*'
+                if re.search(s_string, rule['script'], re.M | re.I):
                     applications[client['name']].append('')
                 else:
                     applications[client['name']].append(rule['name'])
@@ -73,7 +75,7 @@ def main():
                 if client['name'] == "All Applications":
                     continue
                 applications[client['name']].append(rule['name'])
-    
+
     with open('rules_per_app.csv', 'w') as csvfile:
         cw = csv.writer(csvfile)
         applications = list(map(list, applications.items()))
