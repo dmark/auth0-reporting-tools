@@ -1,8 +1,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""apps_and_rules.py -- Writes to stdout a CSV file mapping rules to
-applications. Each line of the CSV represents a single application and
-all the rules that apply to that application.
+"""apps_and_rules.py -- Writes to a file a CSV file mapping rules to
+applications. Each line of the CSV represents a single application and all the
+rules that apply to that application.
 """
 import csv
 import pprint
@@ -18,6 +18,12 @@ import constants
 import login
 
 
+def get_data(env, token, data):
+    headers = {'Authorization': 'Bearer %s' % token['access_token']}
+    url = env['audience'] + data
+    return requests.get(url, headers=headers).json()
+
+
 def main():
     """main"""
 
@@ -25,16 +31,13 @@ def main():
     login.authenticate(env)
     token = login.get_access_token(env)
 
-    url = env['audience'] + 'rules'
-    headers = {'Authorization': 'Bearer %s' % token['access_token']}
-    rules = requests.get(url, headers=headers).json()
+    rules = get_data(env, token, 'rules')
+    clients = get_data(env, token, 'clients')
 
-    url = env['audience'] + 'clients'
-    headers = {'Authorization': 'Bearer %s' % token['access_token']}
-    clients = requests.get(url, headers=headers).json()
-    applications = {}
     # Create a dictionary of lists, with client names as the keys
+    applications = {}
     for client in clients:
+        # Skip the "All Applications" pseudo-app
         if client['name'] == "All Applications":
             continue
         applications[client['name']] = []
@@ -76,6 +79,7 @@ def main():
                     continue
                 applications[client['name']].append(rule['name'])
 
+    # Convert applications{} to a CSV and save it to a file
     with open('rules_per_app.csv', 'w') as csvfile:
         cw = csv.writer(csvfile)
         applications = list(map(list, applications.items()))
