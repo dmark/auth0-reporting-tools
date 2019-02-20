@@ -44,8 +44,8 @@ def main():
 
     for rule in rules:
         # Skip rules that are disabled
-        if rule['enabled'] is False:
-            continue
+        #if rule['enabled'] is False:
+        #    continue
 
         s_clientName_equal = '.*context.clientName ===.*'
         s_clientName_notequal = '.*context.clientName !==.*'
