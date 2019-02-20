@@ -12,6 +12,7 @@
 import base64
 import hashlib
 import json
+import logging
 import requests
 import secrets
 import threading
@@ -30,6 +31,9 @@ from flask import request
 import constants
 
 app = Flask(__name__)
+
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
 
 
 # Is there some way to get rid of these globals?
@@ -94,7 +98,6 @@ def load_env():
         'response_type': 'code',
         'grant_type': 'authorization_code',
         'scopes': 'profile openid email read:clients read:rules',
-        'callback_url': 'http://127.0.0.1:3000/callback',
         'code_challenge_method': 'S256'
     }
 
@@ -103,9 +106,11 @@ def load_env():
 
     env['client_id'] = environ[constants.AUTH0_CLIENT_ID]
     env['tenant_domain'] = environ[constants.AUTH0_DOMAIN]
+    env['audience'] = environ[constants.AUTH0_AUDIENCE]
+    env['callback_url'] = environ[constants.AUTH0_CALLBACK_URL]
+
     env['tenant_url'] = 'https://%s' % env['tenant_domain']
     env['authorize_url'] = env['tenant_url'] + '/authorize?'
-    env['management_url'] = env['tenant_url'] + '/api/v2/'
 
     env['verifier'] = auth0_url_encode(secrets.token_bytes(32))
     env['code_challenge'] = generate_challenge(env['verifier'])
@@ -121,7 +126,7 @@ def authenticate(env):
     global 'code' variable being populated with the authorization code.
     """
     url_parameters = {
-        'audience': env['management_url'],
+        'audience': env['audience'],
         'scope': env['scopes'],
         'response_type': env['response_type'],
         'redirect_uri': env['callback_url'],
@@ -161,7 +166,7 @@ def get_access_token(env):
         'client_id': env['client_id'],
         'code_verifier': env['verifier'],
         'code': code,
-        'audience': env['management_url'],
+        'audience': env['audience'],
         'redirect_uri': env['callback_url']
         }
     return requests.post(token_url, headers=headers, data=json.dumps(body)).json()

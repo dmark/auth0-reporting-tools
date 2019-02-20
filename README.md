@@ -97,4 +97,10 @@ terminal. For technical reasons, it is difficult to close the browser window
 automatically.
 
 At this point the script will process your applications and rules, printing a
-CSV file to stdout.
+CSV file to the file 'rules_per_app.csv'. Each line of the CSV begins with an
+application name, followed by the rules applicable to that application. The
+rules are sorted so they are always in the same order, and if a rule does not
+apply to a given application, that "cell" in the CSV is empty.
+
+It is important to note that the script looks specifically for the use of the
+`context.clientName` parameter in the rules.
