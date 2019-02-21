@@ -1,5 +1,7 @@
 # auth0-reporting-tools
 
+[![CircleCI](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/adds-circleci.svg?style=svg)](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/adds-circleci)
+
 This repository contains python scripts for working with the Auth0 Management API.
 
 ## Authorization Code Grant Flow with PKCE
