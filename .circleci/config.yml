@@ -51,7 +51,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py test
+            python auth_env.py
 
       - store_artifacts:
           path: test-reports
