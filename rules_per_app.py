@@ -5,16 +5,11 @@ applications. Each line of the CSV represents a single application and all the
 rules that apply to that application.
 """
 import csv
-import pprint
 import re
 import requests
-import sys
 
-from dotenv import load_dotenv
-from os import environ as env
-from pathlib import Path
-
-import constants
+import auth_env
+import auth_token
 import login
 
 
@@ -27,9 +22,14 @@ def get_data(env, token, data):
 def main():
     """main"""
 
-    env = login.load_env()
-    login.authenticate(env)
-    token = login.get_access_token(env)
+    env = auth_env.load_env()
+    code = login.authenticate(env)
+    token = auth_token.get_access_token(code, env)
+
+    # try:
+    #     validate_token(token, jwks, env)
+    # except:
+    #     return 'error: token validation error'
 
     rules = get_data(env, token, 'rules')
     clients = get_data(env, token, 'clients')
