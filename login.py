@@ -12,9 +12,12 @@ Based on: https://github.com/gateley-auth0/CLI-PKCE
 import base64
 import hashlib
 import json
+import jwt
 import logging
+import pprint
 import requests
 import secrets
+import textwrap
 import threading
 import urllib
 import webbrowser
@@ -24,6 +27,9 @@ from os import environ
 from pathlib import Path
 from time import sleep
 from werkzeug.serving import make_server
+
+from cryptography.x509 import load_pem_x509_certificate
+from cryptography.hazmat.backends import default_backend
 
 from flask import Flask
 from flask import request
@@ -166,9 +172,55 @@ def get_access_token(env):
                          data=json.dumps(body)).json()
 
 
+def get_jwks(env):
+    """ Pulls https://[YOUR_DOMAIN].auth0.com/.well-known/jwks.json
+    """
+    jwks = urllib.request.urlopen(env['tenant_url'] + '/.well-known/jwks.json')
+    return json.loads(jwks.read())['keys'][0]
+
+
+def extract_public_key(cert):
+    """ Extracts the public key from the x.509 certificate taken from
+    jwks.json. The certificate in jwks.json is a broken PEM format
+    which we need to fix before extracting the key.
+    """
+    cert_string = textwrap.wrap(cert, width=64)
+    cert = '-----BEGIN CERTIFICATE-----\n'
+    for line in cert_string:
+        cert += line + '\n'
+    cert += '-----END CERTIFICATE-----\n'
+    cert_obj = load_pem_x509_certificate(cert.encode(), default_backend())
+    return cert_obj.public_key()
+
+
+def validate_token(token, jwks, env):
+    """ Validate the access token.
+    """
+    public_key = extract_public_key(jwks['x5c'][0])
+    try:
+        jwt.decode(token['access_token'],
+                   public_key,
+                   audience=env['audience'],
+                   issuer=env['tenant_url'] + '/',
+                   algorithms=['RS256'])
+    except jwt.InvalidAudienceError:
+        return 'error: invalid_audience'
+    except jwt.InvalidIssuerError:
+        return 'error: invalid_issuer'
+    except jwt.InvalidIssuedAtError:
+        return 'error: invalid_issued_at'
+    except jwt.ExpiredSignatureError:
+        return 'error: expired_signature'
+    else:
+        return jwt.decode(token['access_token'],
+                          public_key,
+                          audience=env['audience'],
+                          algorithms=['RS256'])
+
+
 def main():
-    """main -- if this module is called directly, authenticate, acquia an
-    access token, and print the access token to stdout.
+    """main -- if this module is called directly, authenticate, acquire an
+    access token, validate the token, and print the validated token to stdout.
     """
     env = load_env()
     authenticate(env)
@@ -182,7 +234,10 @@ def main():
         print(error_message)
         exit(-1)
 
-    print(get_access_token(env))
+    jwks = get_jwks(env)
+    token = get_access_token(env)
+
+    print(validate_token(token, jwks, env))
 
 
 if __name__ == '__main__':

@@ -1,6 +1,4 @@
+cryptography
 flask
 python-dotenv
-authlib
-six
 requests
-auth0-python
