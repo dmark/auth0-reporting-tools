@@ -1,6 +1,6 @@
 # auth0-reporting-tools
 
-[![CircleCI](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/adds-circleci.svg?style=svg)](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/adds-circleci)
+[![CircleCI](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/master.svg?style=svg)](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/master)
 
 This repository contains python scripts for working with the Auth0 Management API.
 
