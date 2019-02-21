@@ -1,4 +1,5 @@
 cryptography
 flask
+pyjwt
 python-dotenv
 requests
