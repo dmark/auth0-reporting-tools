@@ -16,35 +16,37 @@ We begin by creating an [Application](https://auth0.com/docs/applications) withi
 
 After logging in to the Auth0 Management Console, click the “Applications” link in the top left corner of the screen, then click the "Create Application" button in the top right corner of the screen.
 
-![Applications](images/Screenshot 2019-02-20 19.13.23.png)
+![Applications](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.13.23.png)
 
 When you click the “Create Application” button in the Management Console, You’ll get a pop-up window within which you will give the application a name (of your choosing, can be anything, but should describe what the application is for) and you will select what “type” of application this will be. There are four "type" options, one of which is “Native App”. For our purposes, this is the option you will choose.
 
-![Create Application](images/Screenshot 2019-02-20 19.11.09.png)
+![Create Application](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.11.09.png)
 
 One of the key differences between the application types is the authentication method (often referred to as “grant type” or “flow”) used between your actual application and Auth0. In the documentation below you will see mention of “Authorization Code Grant Flow with PKCE”. This is the authentication flow required by the command line tools in this repository, and is the authentication flow used by the Native App application type.
 
 Once you click Create, you will land on the “Quick Start” tab for the application you just created. You can have a look at the Quickstarts (ready made code examples for testing) if you like, but this is not necessary for our purposes.
 
-![Quick Start](images/Screenshot 2019-02-20 19.11.30.png)
+![Quick Start](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.11.30.png)
 
 Skip over to the Settings tab. Notice at the top of the Settings page the “Domain” and “Client ID” values. You should record these values someplace convenient, as you will need them later in the setup process.
 
-![Settings](images/Screenshot 2019-02-20 19.24.46.png)
+![Settings](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.24.46.png)
 
 On the Settings page, scroll about half way down to the "Allowed Callback URLs" text box. Add "http://127.0.0.1:3000/callback" (without the quotes) in the text box.
+
+![Callbacks](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.07.png)
 
 Further down the page, I would suggest setting the “JWT Expiration” to 300 seconds. It is generally a good idea to keep this expiration time short.
 
 Scroll all the way to the bottom, and click “Show Advanced Settings”. You will see the “Application Metadata” screen. Add “ManagementAPIAccess” (without the quotes) in the “Key” field, “True” in the “Value” field, and then click Create.
 
-![Metadata](images/Screenshot 2019-02-20 19.18.24.png)
+![Metadata](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.24.png)
 
 And finally, click Save Changes.
 
 While we’re here, scroll all the way back to the top and click the Connections tab on the right (not the Connections link in the left side menu). Confirm your user database is enabled (green means yes) or, if it is not enabled, click the toggle beside your user database name to enable it.
 
-![Connections](images/Screenshot 2019-02-20 19.18.49.png)
+![Connections](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.49.png)
 
 #### The Rule
 
