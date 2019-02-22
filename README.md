@@ -4,46 +4,47 @@
 
 This repository contains python scripts for working with the Auth0 Management API.
 
-## Authorization Code Grant Flow with PKCE
-
-The scripts in this project authenticate using the [Authorization Code Grant
-Flow with PKCE](https://auth0.com/docs/api-auth/tutorials/authorization-code-grant-pkce).
-The process opens a browser window to handle the authentication, and starts a
-local webserver to receive the callback and the authorization code. The code is
-then exchanged for an access token. The access token is then used to access the
-Management API.
-
-In addition we use the [state parameter](https://auth0.com/docs/protocols/oauth2/oauth-state)
-(as a nonce) to protect against replay attacks.
-
-The Authorization Code Grant Flow with PKCE code used here is based on
-[this](https://github.com/gateley-auth0/CLI-PKCE) project previously created by
-[Auth0 Professional Services](https://auth0.com/professional-services/).
-
 ## Getting Started
 
 ### Configuring Auth0
 
 #### The Application
 
-You will create an [Application](https://auth0.com/docs/applications) within
-the Auth0 Management Console. Creating "Applications" within the Management
-Console is how you register your actual application (your web site, mobile
-application, or in this case a command line tool) with Auth0. You would
-typically create a new Application object in the Management Console for each of
-your actual applications.
+Please note, the language here can get a bit confusing because of a double use of the word “application”, meaning both your actual application (your website or API) and the "Application" entity you create the Management Console.
 
-When you create an application you choose its
-["type"](https://auth0.com/docs/applications/concepts/app-types-auth0),
-where the type defines that application's method of authentication. As the
-utilities in this repository rely on the above mentioned Authorization Code
-Grant Flow with PKCE, you will choose the "Native App" application type.
+We begin by creating an [Application](https://auth0.com/docs/applications) within the [Auth0 Management Console](https://manage.auth0.com/). Creating an Application is how you register your actual application (in this case the command line tools in this software repository) with Auth0. You would typically create a new Application in the Management Console for each of your actual applications.
 
-1. Follow the steps outlined [here](https://auth0.com/docs/applications/guides/register-native-app) to create a Native App.
-1. Once created, on the Setting page, add "http://127.0.0.1:3000/callback" to the list of "Allowed Callback URLs".
-1. Again on the Setting page, scroll to the bottom and click "Show Advanced Settings".
-1. Under the ["Application Metadata"](https://auth0.com/docs/dashboard/reference/settings-application#application-metadata) tab, add "ManagementAPIAccess" as a Key with "True" as the Value.
-1. Click Save.
+After logging in to the Auth0 Management Console, click the “Applications” link in the top left corner of the screen, then click the "Create Application" button in the top right corner of the screen.
+
+![Applications](images/Screenshot 2019-02-20 19.13.23.png)
+
+When you click the “Create Application” button in the Management Console, You’ll get a pop-up window within which you will give the application a name (of your choosing, can be anything, but should describe what the application is for) and you will select what “type” of application this will be. There are four "type" options, one of which is “Native App”. For our purposes, this is the option you will choose.
+
+![Create Application](images/Screenshot 2019-02-20 19.11.09.png)
+
+One of the key differences between the application types is the authentication method (often referred to as “grant type” or “flow”) used between your actual application and Auth0. In the documentation below you will see mention of “Authorization Code Grant Flow with PKCE”. This is the authentication flow required by the command line tools in this repository, and is the authentication flow used by the Native App application type.
+
+Once you click Create, you will land on the “Quick Start” tab for the application you just created. You can have a look at the Quickstarts (ready made code examples for testing) if you like, but this is not necessary for our purposes.
+
+![Quick Start](images/Screenshot 2019-02-20 19.11.30.png)
+
+Skip over to the Settings tab. Notice at the top of the Settings page the “Domain” and “Client ID” values. You should record these values someplace convenient, as you will need them later in the setup process.
+
+![Settings](images/Screenshot 2019-02-20 19.24.46.png)
+
+On the Settings page, scroll about half way down to the "Allowed Callback URLs" text box. Add "http://127.0.0.1:3000/callback" (without the quotes) in the text box.
+
+Further down the page, I would suggest setting the “JWT Expiration” to 300 seconds. It is generally a good idea to keep this expiration time short.
+
+Scroll all the way to the bottom, and click “Show Advanced Settings”. You will see the “Application Metadata” screen. Add “ManagementAPIAccess” (without the quotes) in the “Key” field, “True” in the “Value” field, and then click Create.
+
+![Metadata](images/Screenshot 2019-02-20 19.18.24.png)
+
+And finally, click Save Changes.
+
+While we’re here, scroll all the way back to the top and click the Connections tab on the right (not the Connections link in the left side menu). Confirm your user database is enabled (green means yes) or, if it is not enabled, click the toggle beside your user database name to enable it.
+
+![Connections](images/Screenshot 2019-02-20 19.18.49.png)
 
 #### The Rule
 
@@ -137,3 +138,19 @@ apply to a given application, that "cell" in the CSV is empty.
 
 It is important to note that the script looks specifically for the use of the
 `context.clientName` parameter in the rules.
+
+## Authorization Code Grant Flow with PKCE
+
+The scripts in this project authenticate using the [Authorization Code Grant
+Flow with PKCE](https://auth0.com/docs/api-auth/tutorials/authorization-code-grant-pkce).
+The process opens a browser window to handle the authentication, and starts a
+local webserver to receive the callback and the authorization code. The code is
+then exchanged for an access token. The access token is then used to access the
+Management API.
+
+In addition we use the [state parameter](https://auth0.com/docs/protocols/oauth2/oauth-state)
+(as a nonce) to protect against replay attacks.
+
+The Authorization Code Grant Flow with PKCE code used here is based on
+[this](https://github.com/gateley-auth0/CLI-PKCE) project previously created by
+[Auth0 Professional Services](https://auth0.com/professional-services/).
