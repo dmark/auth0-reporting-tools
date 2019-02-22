@@ -95,15 +95,15 @@ Assumptions for the following steps:
 1. You are running on a reasonably up to date Mac or Linux computer,
 1. You have access to a terminal window and understand how to use it,
 1. You have the following tools installed:
-  1. Python 3
-  1. Virtualenv
-  1. Git
+   1. Python 3
+   1. Virtualenv
+   1. Git
 
 From a terminal window you will create a “[virtualenv environment](https://virtualenv.pypa.io/en/latest/)”, which will function as a repository for the supporting software required to run the reporting tools in this repository. You will create a directory (or “folder”) of your choosing, run the virtualenv command against that directory, and then “activate” the virtualenv as follows.
 
 In the example below I have created a directory called “demo” in my home directory, and directories below that to hold the virtualenv and the actual software.
 
-```
+```shell
 demo$ mkdir -p ~/demo/venv/python-reporting-tools
 demo$ virtualenv ~/demo/venv/python-reporting-tools
 demo$ source ~/demo/venv/python-reporting-tools/bin/activate
@@ -114,7 +114,7 @@ You will likely now see the name of the virtualenv (python-reporting-tools) disp
 
 Next you will download the `rules_per_app.py` software repository into a location of your choosing, and install any supporting software. The supporting software will be installed into your virtualenv environment which means, whenever you want to run these tools, you need to activate the virtualenv first, using the `source` command demonstrated above.
 
-```
+```shell
 (python-reporting-tools) demo$ mkdir ~/demo/git
 (python-reporting-tools) demo$ cd ~/demo/git
 (python-reporting-tools) demo$ git clone git@github.com:dmark/auth0-reporting-tools.git
@@ -126,7 +126,7 @@ The “git clone” command copies the software from where it is stored online t
 
 You are almost ready to run the reporting tool. The last step is to let the tool know about your own Auth0 environment by creating a `.env` environment file with the details of your Auth0 tenant. Using the file `dot_env.example` as a template, you will create a new file called `.env` (note the ‘.’ in front of the name … that’s important!), which will look like the following:
 
-```
+```shell
 AUTH0_CLIENT_ID=${CLIENT_ID}
 AUTH0_CLIENT_SECRET=${CLIENT_SECRET}
 AUTH0_CALLBACK_URL=http://127.0.0.1:3000/callback
@@ -140,7 +140,7 @@ AUTH0_CODE_CHALLENGE_METHOD=S256
 
 You will need to replace the fields surrounded by `${ }` with values from your Auth0 environment. You recorded the necessayr values when you created the Application above. When you are done, the file will look similar to the following, but with your own Auth0 tenant and application data:
 
-```
+```shell
 AUTH0_CLIENT_ID=wppCywAmtNf7o0eTACcGl40X6ta0I5y1
 AUTH0_CLIENT_SECRET=
 AUTH0_CALLBACK_URL=http://127.0.0.1:3000/callback
@@ -163,13 +163,13 @@ If all is well, you can now test the login process by running the following comm
 A browser tab or window will open asking you to log in. You will log in as one of the users you have authorized to use the tool. After logging in, you can close the window or tab, go back to the terminal window, and you should see some rather technical looking output on the screen. It will look something like the following. This means the login was successful:
 
 ```shell
-(python-reporting-tools) demo$ python login.py 
+(python-reporting-tools) demo$ python login.py
 {'iss': 'https://markdrummond.auth0.com/', 'sub': 'auth0|5c6b52fd451bd02197ecbd5f', 'aud': 'https://markdrummond.auth0.com/api/v2/', 'iat': 1550778507, 'exp': 1550864907, 'azp': 'wppCywAmtNf7o0eTACcGl40X6ta0I5y1', 'scope': 'read:rules read:clients'}
 ```
 
 If that worked, then you can run the reporting tool as follows:
 
-```
+```shell
 (python-reporting-tools) demo$ python rules_per_app.py
 ```
 
