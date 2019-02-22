@@ -108,3 +108,4 @@ bin/
 include/
 *.csv
 
+.DS_Store
