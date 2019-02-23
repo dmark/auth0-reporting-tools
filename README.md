@@ -5,10 +5,19 @@
 This repository contains python scripts for working with the Auth0 Management
 API.
 
-*References*:
+**References**:
 
 * An Overview of Auth0: https://auth0.com/docs/getting-started/overview
 * Getting Started with Auth0: https://auth0.com/docs/getting-started/the-basics
+
+The documentation below also includes links to many additional resouces, in
+particular links to official [Auth0 documentation](https://auth0.com/docs).
+Reading the official documentation is very much encouraged.
+
+While this tool is not supported by Auth0, if you require additional assistance
+you can leverage the Auth0 [Community](https://community.auth0.com/) or, if you
+have a paid subscription, you can open a Support ticket with Auth0. All support
+options are detail [here](https://auth0.com/docs/support).
 
 ## Configuring Auth0
 
@@ -186,7 +195,9 @@ this repository. You will create a directory (or “folder”) of your choosing,
 run the virtualenv command against that directory, and then “activate” the
 virtualenv as follows.
 
-In the example below I have created a directory called “demo” in my home directory, and directories below that to hold the virtualenv and the actual software.
+In the example below I have created a directory called “demo” in my home
+directory, and directories below that to hold the virtualenv and the actual
+software.
 
 ```shell
 demo$ mkdir -p ~/demo/venv/python-reporting-tools
@@ -195,9 +206,15 @@ demo$ source ~/demo/venv/python-reporting-tools/bin/activate
 (python-reporting-tools) demo$
 ```
 
-You will likely now see the name of the virtualenv (python-reporting-tools) displayed as part of the command line. This lets you know the virtualenv is active.
+You will likely now see the name of the virtualenv (python-reporting-tools)
+displayed as part of the command line. This lets you know the virtualenv is
+active.
 
-Next you will download the `rules_per_app.py` software repository into a location of your choosing, and install any supporting software. The supporting software will be installed into your virtualenv environment which means, whenever you want to run these tools, you need to activate the virtualenv first, using the `source` command demonstrated above.
+Next you will download the `rules_per_app.py` software repository into a
+location of your choosing, and install any supporting software. The supporting
+software will be installed into your virtualenv environment which means,
+whenever you want to run these tools, you need to activate the virtualenv
+first, using the `source` command demonstrated above.
 
 ```shell
 (python-reporting-tools) demo$ mkdir ~/demo/git
@@ -207,9 +224,15 @@ Next you will download the `rules_per_app.py` software repository into a locatio
 (python-reporting-tools) demo$ pip install -r requirements.txt
 ```
 
-The “git clone” command copies the software from where it is stored online to your local machine. The “pip install” command will install the supporting software into the virtualenv environment.
+The “git clone” command copies the software from where it is stored online to
+your local machine. The “pip install” command will install the supporting
+software into the virtualenv environment.
 
-You are almost ready to run the reporting tool. The last step is to let the tool know about your own Auth0 environment by creating a `.env` environment file with the details of your Auth0 tenant. Using the file `dot_env.example` as a template, you will create a new file called `.env` (note the ‘.’ in front of the name … that’s important!), which will look like the following:
+You are almost ready to run the reporting tool. The last step is to let the
+tool know about your own Auth0 environment by creating a `.env` environment
+file with the details of your Auth0 tenant. Using the file `dot_env.example` as
+a template, you will create a new file called `.env` (note the ‘.’ in front of
+the name … that’s important!), which will look like the following:
 
 ```shell
 AUTH0_CLIENT_ID=${CLIENT_ID}
@@ -223,7 +246,10 @@ AUTH0_SCOPES=profile openid email read:clients read:rules
 AUTH0_CODE_CHALLENGE_METHOD=S256
 ```
 
-You will need to replace the fields surrounded by `${ }` with values from your Auth0 environment. You recorded the necessayr values when you created the Application above. When you are done, the file will look similar to the following, but with your own Auth0 tenant and application data:
+You will need to replace the fields surrounded by `${ }` with values from your
+Auth0 environment. You recorded the necessayr values when you created the
+Application above. When you are done, the file will look similar to the
+following, but with your own Auth0 tenant and application data:
 
 ```shell
 AUTH0_CLIENT_ID=wppCywAmtNf7o0eTACcGl40X6ta0I5y1
@@ -237,15 +263,22 @@ AUTH0_SCOPES=profile openid email read:clients read:rules
 AUTH0_CODE_CHALLENGE_METHOD=S256
 ```
 
-The `CLIENT_ID` and `TENANT_NAME` values you can get from the Settings page of the Auth0 Application you created previously. The `CLIENT_SECRET` can be left blank, and the remaining fields can be left alone.
+The `CLIENT_ID` and `TENANT_NAME` values you can get from the Settings page of
+the Auth0 Application you created previously. The `CLIENT_SECRET` can be left
+blank, and the remaining fields can be left alone.
 
-If all is well, you can now test the login process by running the following command from the terminal:
+If all is well, you can now test the login process by running the following
+command from the terminal:
 
 ```shell
 (python-reporting-tools) demo$ python login.py
 ```
 
-A browser tab or window will open asking you to log in. You will log in as one of the users you have authorized to use the tool. After logging in, you can close the window or tab, go back to the terminal window, and you should see some rather technical looking output on the screen. It will look something like the following. This means the login was successful:
+A browser tab or window will open asking you to log in. You will log in as one
+of the users you have authorized to use the tool. After logging in, you can
+close the window or tab, go back to the terminal window, and you should see
+some rather technical looking output on the screen. It will look something like
+the following. This means the login was successful:
 
 ```shell
 (python-reporting-tools) demo$ python login.py
@@ -258,19 +291,25 @@ If that worked, then you can run the reporting tool as follows:
 (python-reporting-tools) demo$ python rules_per_app.py
 ```
 
-Another browser tab will open, but you will likely be logged in automatically since you just logged in above, and after a short period of time you should find a CSV file called “rules_per_app.csv” in the directory where you are currently located. You can open the file in a spreadsheet application like Excel, format and modify it as needed.
+Another browser tab will open, but you will likely be logged in automatically
+since you just logged in above, and after a short period of time you should
+find a CSV file called “rules_per_app.csv” in the directory where you are
+currently located. You can open the file in a spreadsheet application like
+Excel, format and modify it as needed.
 
 ## Authorization Code Grant Flow with PKCE
 
 The scripts in this project authenticate using the [Authorization Code Grant
-Flow with PKCE](https://auth0.com/docs/api-auth/tutorials/authorization-code-grant-pkce).
+Flow with
+PKCE](https://auth0.com/docs/api-auth/tutorials/authorization-code-grant-pkce).
 The process opens a browser window to handle the authentication, and starts a
 local webserver to receive the callback and the authorization code. The code is
 then exchanged for an access token. The access token is then used to access the
 Management API.
 
-In addition we use the [state parameter](https://auth0.com/docs/protocols/oauth2/oauth-state)
-(as a nonce) to protect against replay attacks.
+In addition we use the [state
+parameter](https://auth0.com/docs/protocols/oauth2/oauth-state) (as a nonce) to
+protect against replay attacks.
 
 The Authorization Code Grant Flow with PKCE code used here is based on
 [this](https://github.com/gateley-auth0/CLI-PKCE) project previously created by
