@@ -194,9 +194,15 @@ Assumptions for the following steps:
 1. You are running on a reasonably up to date Mac or Linux computer,
 1. You have access to a terminal window and understand how to use it,
 1. You have the following tools installed:
+<<<<<<< HEAD
+   1. Python 3
+   1. Virtualenv
+   1. Git
+=======
     1. [Python 3](https://www.python.org/downloads/)
     1. Virtualenv
     1. [Git](https://git-scm.com/downloads)
+>>>>>>> 61b16040dcda3ae63b8a36febe1383876f39364a
 
 From a terminal window you will create a “[virtualenv
 environment](https://virtualenv.pypa.io/en/latest/)”, which will function as a
