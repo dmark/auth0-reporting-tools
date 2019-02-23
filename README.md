@@ -5,7 +5,7 @@
 This repository contains python scripts for working with the Auth0 Management
 API.
 
-References:
+*References*:
 
 * An Overview of Auth0: https://auth0.com/docs/getting-started/overview
 * Getting Started with Auth0: https://auth0.com/docs/getting-started/the-basics
@@ -30,7 +30,7 @@ in the top left corner of the screen, then click the "[Create
 Application](https://auth0.com/docs/applications/guides/register-native-app)"
 button in the top right corner of the screen.
 
-![Applications](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.13.23.png)
+![Applications](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.13.23.png)
 
 When you click the “Create Application” button in the Management Console,
 you’ll get a pop-up window within which you will give the application a name
@@ -39,7 +39,7 @@ for) and you will select what “type” of application this will be. There are
 four "type" options, one of which is “Native App”. For our purposes, this is
 the option you will choose.
 
-![Create Application](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.11.09.png)
+![Create Application](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.11.09.png)
 
 One of the key differences between the application types is the [authentication
 method](https://auth0.com/docs/applications/reference/grant-types-available)
@@ -55,7 +55,7 @@ Start](https://auth0.com/docs/quickstarts)” tab for the application you just
 created. You can have a look at the Quickstarts (ready made code examples for
 testing) if you like, but this is not necessary for our purposes.
 
-![Quick Start](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.11.30.png)
+![Quick Start](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.11.30.png)
 
 Skip over to the
 [Settings](https://auth0.com/docs/dashboard/reference/settings-application)
@@ -63,13 +63,13 @@ tab. Notice at the top of the Settings page the “Domain” and “Client ID”
 values. _You should record these values someplace convenient_, as you will need
 them later in the setup process.
 
-![Settings](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.24.46.png)
+![Settings](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.24.46.png)
 
 On the Settings page, scroll about half way down to the "Allowed Callback URLs"
 text box. Add "http://127.0.0.1:3000/callback" (without the quotes) in the text
 box.
 
-![Callbacks](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.07.png)
+![Callbacks](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.18.07.png)
 
 Further down the page, I would suggest setting the “JWT Expiration” to 300
 seconds. It is [generally a good idea to keep this expiration time
@@ -82,7 +82,7 @@ You will see the “Application Metadata” screen. Add “ManagementAPIAccess�
 click Create.  This feature will be used as part of our access control
 mechanism.
 
-![Metadata](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.24.png)
+![Metadata](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.18.24.png)
 
 And finally, click Save Changes.
 
@@ -91,7 +91,7 @@ tab on the right (not the Connections link in the left side menu). Confirm your
 user database is enabled (green means yes) or, if it is not enabled, click the
 toggle beside your user database name to enable it.
 
-![Connections](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.49.png)
+![Connections](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.18.49.png)
 
 ### The Rule
 
@@ -105,11 +105,11 @@ line tools in this repository).
 In the Auth0 Management Console, click the Rules link in the left side menu,
 then click [Create Rule](https://auth0.com/docs/rules/guides/create).
 
-![Rules](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2020.45.20.png)
+![Rules](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2020.45.20.png)
 
 From the "Pick a Rule Template" page, select the "Empty Rule".
 
-![Rule Template](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2020.49.58.png)
+![Rule Template](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2020.49.58.png)
 
 The Edit Rule page will open. Give the rule a meaningful name, something
 descriptive like "Access control for reporting tools". Delete the code in the
@@ -117,7 +117,7 @@ code box, then copy the code from the file `rules_per_app.js` in this software
 repository, and paste it into the now empty code box. Replace the text
 '[YOUR_TENANT]' with the name of your own tenant, then click Save.
 
-![Edit Rule](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2020.54.30.png)
+![Edit Rule](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2020.54.30.png)
 
 ### The Users
 
@@ -131,11 +131,11 @@ profiles in Auth0. Start by clicking the Users link in the left side menu in
 the Auth0 Management Console. From here you can create a new user, or search
 for an existing user. For this example I will use an existing user.
 
-![Users](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2021.03.37.png)
+![Users](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2021.03.37.png)
 
 Click on the user's name field to open their profile page.
 
-![User](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2021.04.46.png)
+![User](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2021.04.46.png)
 
 Scroll down to "Metadata" and edit the users `app_metadata` text box to include
 `ManagementAPIAccess` under `roles` as follows:
@@ -163,7 +163,7 @@ If there is an existing "roles" list, you will need to add the new role to the l
 The end result will look something like what is below. You can ignore, and do
 not change, and other data in the metadata text boxes.
 
-![App Metadata](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2021.04.57.png)
+![App Metadata](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2021.04.57.png)
 
 Click Save. Repeat this process for all users who are authorized to use the
 reporting tools in this software repository.
@@ -175,9 +175,9 @@ Assumptions for the following steps:
 1. You are running on a reasonably up to date Mac or Linux computer,
 1. You have access to a terminal window and understand how to use it,
 1. You have the following tools installed:
-  1. [Python 3](https://www.python.org/downloads/)
-  1. Virtualenv
-  1. [Git](https://git-scm.com/downloads)
+    1. [Python 3](https://www.python.org/downloads/)
+    1. Virtualenv
+    1. [Git](https://git-scm.com/downloads)
 
 From a terminal window you will create a “[virtualenv
 environment](https://virtualenv.pypa.io/en/latest/)”, which will function as a
@@ -188,7 +188,7 @@ virtualenv as follows.
 
 In the example below I have created a directory called “demo” in my home directory, and directories below that to hold the virtualenv and the actual software.
 
-```
+```shell
 demo$ mkdir -p ~/demo/venv/python-reporting-tools
 demo$ virtualenv ~/demo/venv/python-reporting-tools
 demo$ source ~/demo/venv/python-reporting-tools/bin/activate
@@ -199,7 +199,7 @@ You will likely now see the name of the virtualenv (python-reporting-tools) disp
 
 Next you will download the `rules_per_app.py` software repository into a location of your choosing, and install any supporting software. The supporting software will be installed into your virtualenv environment which means, whenever you want to run these tools, you need to activate the virtualenv first, using the `source` command demonstrated above.
 
-```
+```shell
 (python-reporting-tools) demo$ mkdir ~/demo/git
 (python-reporting-tools) demo$ cd ~/demo/git
 (python-reporting-tools) demo$ git clone git@github.com:dmark/auth0-reporting-tools.git
@@ -211,7 +211,7 @@ The “git clone” command copies the software from where it is stored online t
 
 You are almost ready to run the reporting tool. The last step is to let the tool know about your own Auth0 environment by creating a `.env` environment file with the details of your Auth0 tenant. Using the file `dot_env.example` as a template, you will create a new file called `.env` (note the ‘.’ in front of the name … that’s important!), which will look like the following:
 
-```
+```shell
 AUTH0_CLIENT_ID=${CLIENT_ID}
 AUTH0_CLIENT_SECRET=${CLIENT_SECRET}
 AUTH0_CALLBACK_URL=http://127.0.0.1:3000/callback
@@ -225,7 +225,7 @@ AUTH0_CODE_CHALLENGE_METHOD=S256
 
 You will need to replace the fields surrounded by `${ }` with values from your Auth0 environment. You recorded the necessayr values when you created the Application above. When you are done, the file will look similar to the following, but with your own Auth0 tenant and application data:
 
-```
+```shell
 AUTH0_CLIENT_ID=wppCywAmtNf7o0eTACcGl40X6ta0I5y1
 AUTH0_CLIENT_SECRET=
 AUTH0_CALLBACK_URL=http://127.0.0.1:3000/callback
@@ -248,13 +248,13 @@ If all is well, you can now test the login process by running the following comm
 A browser tab or window will open asking you to log in. You will log in as one of the users you have authorized to use the tool. After logging in, you can close the window or tab, go back to the terminal window, and you should see some rather technical looking output on the screen. It will look something like the following. This means the login was successful:
 
 ```shell
-(python-reporting-tools) demo$ python login.py 
+(python-reporting-tools) demo$ python login.py
 {'iss': 'https://markdrummond.auth0.com/', 'sub': 'auth0|5c6b52fd451bd02197ecbd5f', 'aud': 'https://markdrummond.auth0.com/api/v2/', 'iat': 1550778507, 'exp': 1550864907, 'azp': 'wppCywAmtNf7o0eTACcGl40X6ta0I5y1', 'scope': 'read:rules read:clients'}
 ```
 
 If that worked, then you can run the reporting tool as follows:
 
-```
+```shell
 (python-reporting-tools) demo$ python rules_per_app.py
 ```
 
