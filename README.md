@@ -21,6 +21,8 @@ you can leverage the Auth0 [Community](https://community.auth0.com/) or, if you
 have a paid subscription, you can open a Support ticket with Auth0. All support
 options are detail [here](https://auth0.com/docs/support).
 
+---
+
 ## Configuring Auth0
 
 ### The Application
@@ -104,6 +106,8 @@ toggle beside your user database name to enable it.
 
 ![Connections](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-20%2019.18.49.png)
 
+---
+
 ### The Rule
 
 [Rules](https://auth0.com/docs/rules) are snippets of JavaScript code that run
@@ -129,6 +133,8 @@ repository, and paste it into the now empty code box. Replace the text
 '[YOUR_TENANT]' with the name of your own tenant, then click Save.
 
 ![Edit Rule](https://github.com/dmark/auth0-reporting-tools/blob/master/images/Screenshot%202019-02-21%2020.54.30.png)
+
+---
 
 ### The Users
 
@@ -178,6 +184,8 @@ not change, and other data in the metadata text boxes.
 
 Click Save. Repeat this process for all users who are authorized to use the
 reporting tools in this software repository.
+
+---
 
 ## Configuring the Local Environment
 
@@ -298,6 +306,8 @@ since you just logged in above, and after a short period of time you should
 find a CSV file called “rules_per_app.csv” in the directory where you are
 currently located. You can open the file in a spreadsheet application like
 Excel, format and modify it as needed.
+
+---
 
 ## Authorization Code Grant Flow with PKCE
 
