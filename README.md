@@ -2,55 +2,108 @@
 
 [![CircleCI](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/master.svg?style=svg)](https://circleci.com/gh/dmark/auth0-reporting-tools/tree/master)
 
-This repository contains python scripts for working with the Auth0 Management API.
+This repository contains python scripts for working with the Auth0 Management
+API.
+
+References:
+
+* An Overview of Auth0: https://auth0.com/docs/getting-started/overview
+* Getting Started with Auth0: https://auth0.com/docs/getting-started/the-basics
 
 ## Configuring Auth0
 
 ### The Application
 
-Please note, the language here can get a bit confusing because of a double use of the word “application”, meaning both your actual application (your website or API) and the "Application" entity you create the Management Console.
+Please note, the language here can get a bit confusing because of a double use
+of the word “application”, meaning both your actual application (your website
+or API) and the "Application" entity you create the Management Console.
 
-We begin by creating an [Application](https://auth0.com/docs/applications) within the [Auth0 Management Console](https://manage.auth0.com/). Creating an Application is how you register your actual application (in this case the command line tools in this software repository) with Auth0. You would typically create a new Application in the Management Console for each of your actual applications.
+We begin by creating an [Application](https://auth0.com/docs/applications)
+within the [Auth0 Management Console](https://manage.auth0.com/). Creating an
+Application is how you register your actual application (in this case the
+command line tools in this software repository) with Auth0. You would typically
+create a new Application in the Management Console for each of your actual
+applications.
 
-After logging in to the Auth0 Management Console, click the “Applications” link in the top left corner of the screen, then click the "Create Application" button in the top right corner of the screen.
+After logging in to the Auth0 Management Console, click the “Applications” link
+in the top left corner of the screen, then click the "[Create
+Application](https://auth0.com/docs/applications/guides/register-native-app)"
+button in the top right corner of the screen.
 
 ![Applications](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.13.23.png)
 
-When you click the “Create Application” button in the Management Console, You’ll get a pop-up window within which you will give the application a name (of your choosing, can be anything, but should describe what the application is for) and you will select what “type” of application this will be. There are four "type" options, one of which is “Native App”. For our purposes, this is the option you will choose.
+When you click the “Create Application” button in the Management Console,
+you’ll get a pop-up window within which you will give the application a name
+(of your choosing, can be anything, but should describe what the application is
+for) and you will select what “type” of application this will be. There are
+four "type" options, one of which is “Native App”. For our purposes, this is
+the option you will choose.
 
 ![Create Application](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.11.09.png)
 
-One of the key differences between the application types is the authentication method (often referred to as “grant type” or “flow”) used between your actual application and Auth0. In the documentation below you will see mention of “Authorization Code Grant Flow with PKCE”. This is the authentication flow required by the command line tools in this repository, and is the authentication flow used by the Native App application type.
+One of the key differences between the application types is the [authentication
+method](https://auth0.com/docs/applications/reference/grant-types-available)
+(often referred to as “grant type” or “flow”) used between your actual
+application and Auth0. In the documentation below you will see mention of
+“[Authorization Code Grant Flow with
+PKCE](https://auth0.com/docs/flows/concepts/mobile-login-flow)”. This is the
+authentication flow required by the command line tools in this repository, and
+is the authentication flow used by the Native App application type.
 
-Once you click Create, you will land on the “Quick Start” tab for the application you just created. You can have a look at the Quickstarts (ready made code examples for testing) if you like, but this is not necessary for our purposes.
+Once you click Create, you will land on the “[Quick
+Start](https://auth0.com/docs/quickstarts)” tab for the application you just
+created. You can have a look at the Quickstarts (ready made code examples for
+testing) if you like, but this is not necessary for our purposes.
 
 ![Quick Start](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.11.30.png)
 
-Skip over to the Settings tab. Notice at the top of the Settings page the “Domain” and “Client ID” values. You should record these values someplace convenient, as you will need them later in the setup process.
+Skip over to the
+[Settings](https://auth0.com/docs/dashboard/reference/settings-application)
+tab. Notice at the top of the Settings page the “Domain” and “Client ID”
+values. _You should record these values someplace convenient_, as you will need
+them later in the setup process.
 
 ![Settings](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.24.46.png)
 
-On the Settings page, scroll about half way down to the "Allowed Callback URLs" text box. Add "http://127.0.0.1:3000/callback" (without the quotes) in the text box.
+On the Settings page, scroll about half way down to the "Allowed Callback URLs"
+text box. Add "http://127.0.0.1:3000/callback" (without the quotes) in the text
+box.
 
 ![Callbacks](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.07.png)
 
-Further down the page, I would suggest setting the “JWT Expiration” to 300 seconds. It is generally a good idea to keep this expiration time short.
+Further down the page, I would suggest setting the “JWT Expiration” to 300
+seconds. It is [generally a good idea to keep this expiration time
+short](https://auth0.com/docs/best-practices/application-settings).
 
-Scroll all the way to the bottom, and click “Show Advanced Settings”. You will see the “Application Metadata” screen. Add “ManagementAPIAccess” (without the quotes) in the “Key” field, “True” in the “Value” field, and then click Create. This feature will be used as part of our access control mechanism.
+Scroll all the way to the bottom, and click “[Show Advanced
+Settings](https://auth0.com/docs/dashboard/reference/settings-application#advanced-settings)”.
+You will see the “Application Metadata” screen. Add “ManagementAPIAccess”
+(without the quotes) in the “Key” field, “True” in the “Value” field, and then
+click Create.  This feature will be used as part of our access control
+mechanism.
 
 ![Metadata](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.24.png)
 
 And finally, click Save Changes.
 
-While we’re here, scroll all the way back to the top and click the Connections tab on the right (not the Connections link in the left side menu). Confirm your user database is enabled (green means yes) or, if it is not enabled, click the toggle beside your user database name to enable it.
+While we’re here, scroll all the way back to the top and click the Connections
+tab on the right (not the Connections link in the left side menu). Confirm your
+user database is enabled (green means yes) or, if it is not enabled, click the
+toggle beside your user database name to enable it.
 
 ![Connections](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-20%2019.18.49.png)
 
 ### The Rule
 
-Rules are snippets of JavaScript code that run when a user logs in. Rules allow you to customize the Auth0 service in many useful ways. Refer to [this](https://github.com/auth0/rules) repository for examples. For our purposes we will create a rule that controls access to our Auth0 Application (and therefore, controls who is allowed to use the command line tools in this repository).
+[Rules](https://auth0.com/docs/rules) are snippets of JavaScript code that run
+when a user logs in. Rules allow you to customize the Auth0 service in many
+useful ways. Refer to [this](https://github.com/auth0/rules) repository for
+examples. For our purposes we will create a rule that controls access to our
+Auth0 Application (and therefore, controls who is allowed to use the command
+line tools in this repository).
 
-In the Auth0 Management Console, click the Rules link in the left side menu, then click Create Rule.
+In the Auth0 Management Console, click the Rules link in the left side menu,
+then click [Create Rule](https://auth0.com/docs/rules/guides/create).
 
 ![Rules](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2020.45.20.png)
 
@@ -58,15 +111,25 @@ From the "Pick a Rule Template" page, select the "Empty Rule".
 
 ![Rule Template](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2020.49.58.png)
 
-The Edit Rule page will open. Give the rule a meaningful name, something scriptive like "Access control for reporting tools". Delete the code in the code box, then copy the code from the file `rules_per_app.js` in this software repository, and paste it into the now empty code box. Replace the text '[YOUR_TENANT]' with the name of your own tenant, then click Save.
+The Edit Rule page will open. Give the rule a meaningful name, something
+descriptive like "Access control for reporting tools". Delete the code in the
+code box, then copy the code from the file `rules_per_app.js` in this software
+repository, and paste it into the now empty code box. Replace the text
+'[YOUR_TENANT]' with the name of your own tenant, then click Save.
 
 ![Edit Rule](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2020.54.30.png)
 
 ### The Users
 
-Previously we added some "metadata" to the Application we created above, and we said that it will be part of our access control mechanism, which also includes the rule you just created. The last piece of the access control mechanism will be authorizing users to use the command line tools.
+Previously we added some "metadata" to the Application we created above, and we
+said that it will be part of our access control mechanism, which also includes
+the rule you just created. The last piece of the access control mechanism will
+be authorizing users to use the command line tools.
 
-You will authorize users by adding a similar piece of metadata to their profiles in Auth0. Start by clicking the Users link in the left side menu in the Auth0 Management Console. From here you can create a new user, or search for an existing user. For this example I will use an existing user.
+You will authorize users by adding a similar piece of metadata to their
+profiles in Auth0. Start by clicking the Users link in the left side menu in
+the Auth0 Management Console. From here you can create a new user, or search
+for an existing user. For this example I will use an existing user.
 
 ![Users](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2021.03.37.png)
 
@@ -74,7 +137,8 @@ Click on the user's name field to open their profile page.
 
 ![User](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2021.04.46.png)
 
-Scroll down to "Metadata" and edit the users `app_metadata` text box to include `ManagementAPIAccess` under `roles` as follows:
+Scroll down to "Metadata" and edit the users `app_metadata` text box to include
+`ManagementAPIAccess` under `roles` as follows:
 
 ```json
 "app_metadata": {
@@ -84,9 +148,25 @@ Scroll down to "Metadata" and edit the users `app_metadata` text box to include 
 }
 ```
 
+If there is an existing "roles" list, you will need to add the new role to the list like so:
+
+```json
+"app_metadata": {
+  "roles": [
+    "ARole",
+    "AnotherRole",
+    "ManagementAPIAccess"
+  ]
+}
+```
+
+The end result will look something like what is below. You can ignore, and do
+not change, and other data in the metadata text boxes.
+
 ![App Metadata](https://github.com/dmark/auth0-reporting-tools/blob/updates-documentation/images/Screenshot%202019-02-21%2021.04.57.png)
 
-Click Save! Repeat this process for all users who are authorized to the reporting tools in this software repository.
+Click Save. Repeat this process for all users who are authorized to use the
+reporting tools in this software repository.
 
 ## Configuring the Local Environment
 
@@ -95,11 +175,16 @@ Assumptions for the following steps:
 1. You are running on a reasonably up to date Mac or Linux computer,
 1. You have access to a terminal window and understand how to use it,
 1. You have the following tools installed:
-  1. Python 3
+  1. [Python 3](https://www.python.org/downloads/)
   1. Virtualenv
-  1. Git
+  1. [Git](https://git-scm.com/downloads)
 
-From a terminal window you will create a “[virtualenv environment](https://virtualenv.pypa.io/en/latest/)”, which will function as a repository for the supporting software required to run the reporting tools in this repository. You will create a directory (or “folder”) of your choosing, run the virtualenv command against that directory, and then “activate” the virtualenv as follows.
+From a terminal window you will create a “[virtualenv
+environment](https://virtualenv.pypa.io/en/latest/)”, which will function as a
+repository for the supporting software required to run the reporting tools in
+this repository. You will create a directory (or “folder”) of your choosing,
+run the virtualenv command against that directory, and then “activate” the
+virtualenv as follows.
 
 In the example below I have created a directory called “demo” in my home directory, and directories below that to hold the virtualenv and the actual software.
 
