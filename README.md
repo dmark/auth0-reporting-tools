@@ -5,6 +5,8 @@
 This repository contains python scripts for working with the Auth0 Management
 API.
 
+## Before You Begin
+
 **References**:
 
 * An Overview of Auth0: https://auth0.com/docs/getting-started/overview
